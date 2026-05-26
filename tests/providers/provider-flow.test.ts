@@ -11,6 +11,8 @@ import {
   DEEPSEEK_PRIMARY_MODELS,
   DEFAULT_DEEPSEEK_MODEL_MAPPINGS,
   createDefaultModelMappings,
+  isDefaultModelMapping,
+  normalizeModelMappingsWithDefaults,
   sanitizeDeepSeekModelOverrides,
 } from '../../src/main/store/types.ts'
 import {
@@ -95,6 +97,14 @@ test('DeepSeek persisted model overrides are migrated away from old built-in ali
 })
 
 test('DeepSeek feature aliases are seeded as global model mappings', () => {
+  assert.deepEqual(Object.keys(DEFAULT_DEEPSEEK_MODEL_MAPPINGS), [
+    'deepseek-v4-flash-think',
+    'deepseek-v4-flash-search',
+    'deepseek-v4-flash-think-search',
+    'deepseek-v4-pro-think',
+    'deepseek-v4-pro-search',
+    'deepseek-v4-pro-think-search',
+  ])
   assert.deepEqual(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['deepseek-v4-flash-think'], {
     requestModel: 'deepseek-v4-flash-think',
     actualModel: 'deepseek-v4-flash',
@@ -105,17 +115,42 @@ test('DeepSeek feature aliases are seeded as global model mappings', () => {
     actualModel: 'deepseek-v4-pro',
     preferredProviderId: 'deepseek',
   })
-  assert.deepEqual(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['deepseek-reasoner'], {
-    requestModel: 'deepseek-reasoner',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  })
+  assert.equal(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['deepseek-chat'], undefined)
+  assert.equal(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['deepseek-reasoner'], undefined)
+  assert.equal(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['DeepSeek-R1'], undefined)
+  assert.equal(DEFAULT_DEEPSEEK_MODEL_MAPPINGS['DeepSeek-R1-Search'], undefined)
+})
+
+test('built-in model mappings are restored and cannot be replaced by custom config', () => {
+  assert.equal(isDefaultModelMapping('deepseek-v4-flash-search'), true)
+  assert.equal(isDefaultModelMapping('deepseek-chat'), false)
+
+  assert.deepEqual(
+    normalizeModelMappingsWithDefaults({
+      'deepseek-v4-flash-search': {
+        requestModel: 'deepseek-v4-flash-search',
+        actualModel: 'tampered',
+        preferredProviderId: 'custom',
+      },
+      'custom-alias': {
+        requestModel: 'custom-alias',
+        actualModel: 'deepseek-v4-flash',
+      },
+    }),
+    {
+      ...createDefaultModelMappings(),
+      'custom-alias': {
+        requestModel: 'custom-alias',
+        actualModel: 'deepseek-v4-flash',
+      },
+    },
+  )
 })
 
 test('DeepSeek default model mapping seeding preserves editable replacement semantics', () => {
   const first = createDefaultModelMappings()
-  first['deepseek-reasoner'].actualModel = 'mutated'
-  assert.equal(createDefaultModelMappings()['deepseek-reasoner'].actualModel, 'deepseek-v4-flash')
+  first['deepseek-v4-flash-search'].actualModel = 'mutated'
+  assert.equal(createDefaultModelMappings()['deepseek-v4-flash-search'].actualModel, 'deepseek-v4-flash')
 
   const storeSource = readFileSync(
     join(root, 'src/main/store/store.ts'),
@@ -123,6 +158,7 @@ test('DeepSeek default model mapping seeding preserves editable replacement sema
   )
 
   assert.match(storeSource, /initializeDefaultModelMappings\(\)/)
+  assert.match(storeSource, /normalizeModelMappingsWithDefaults/)
   assert.doesNotMatch(storeSource, /modelMappings:\s*this\.normalizeModelMappings\(rawConfig\.modelMappings\)/)
 })
 

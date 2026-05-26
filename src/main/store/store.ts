@@ -33,6 +33,7 @@ import {
   CustomModel,
   DEFAULT_REQUEST_LOG_CONFIG,
   createDefaultModelMappings,
+  normalizeModelMappingsWithDefaults,
   sanitizeDeepSeekModelOverrides,
 } from './types'
 import { BUILTIN_PROMPTS } from '../data/builtin-prompts'
@@ -239,12 +240,6 @@ class StoreManager {
     return config.logRetentionDays * 1000
   }
 
-  private cloneModelMappings(mappings?: AppConfig['modelMappings']): AppConfig['modelMappings'] {
-    return Object.fromEntries(
-      Object.entries(mappings || {}).map(([key, mapping]) => [key, { ...mapping }]),
-    )
-  }
-
   private normalizeConfig(config: Partial<AppConfig>): AppConfig {
     const rawConfig = {
       ...DEFAULT_CONFIG,
@@ -254,7 +249,7 @@ class StoreManager {
 
     return {
       ...rawConfig,
-      modelMappings: this.cloneModelMappings(rawConfig.modelMappings),
+      modelMappings: normalizeModelMappingsWithDefaults(rawConfig.modelMappings),
       defaultModelMappingsSeeded: config.defaultModelMappingsSeeded,
       requestLogConfig: normalizeRequestLogConfig(
         rawConfig.requestLogConfig || DEFAULT_REQUEST_LOG_CONFIG,

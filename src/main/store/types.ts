@@ -604,6 +604,15 @@ export type UserModelOverrides = Record<string, ProviderModelOverrides>
 
 export const DEEPSEEK_PRIMARY_MODELS = ['deepseek-v4-flash', 'deepseek-v4-pro']
 
+export const DEEPSEEK_LEGACY_MODEL_MAPPING_NAMES = [
+  'deepseek-chat',
+  'deepseek-reasoner',
+  'DeepSeek-V3.2',
+  'DeepSeek-Search',
+  'DeepSeek-R1',
+  'DeepSeek-R1-Search',
+]
+
 /**
  * Effective Model Information
  * Combined model info after merging defaults with user overrides
@@ -733,36 +742,6 @@ export const DEFAULT_DEEPSEEK_MODEL_MAPPINGS: Record<string, ModelMapping> = {
     actualModel: 'deepseek-v4-pro',
     preferredProviderId: 'deepseek',
   },
-  'deepseek-chat': {
-    requestModel: 'deepseek-chat',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
-  'deepseek-reasoner': {
-    requestModel: 'deepseek-reasoner',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
-  'DeepSeek-V3.2': {
-    requestModel: 'DeepSeek-V3.2',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
-  'DeepSeek-Search': {
-    requestModel: 'DeepSeek-Search',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
-  'DeepSeek-R1': {
-    requestModel: 'DeepSeek-R1',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
-  'DeepSeek-R1-Search': {
-    requestModel: 'DeepSeek-R1-Search',
-    actualModel: 'deepseek-v4-flash',
-    preferredProviderId: 'deepseek',
-  },
 }
 
 export function createDefaultModelMappings(): Record<string, ModelMapping> {
@@ -771,11 +750,32 @@ export function createDefaultModelMappings(): Record<string, ModelMapping> {
   )
 }
 
+export function isDefaultModelMapping(requestModel: string): boolean {
+  return requestModel in DEFAULT_DEEPSEEK_MODEL_MAPPINGS
+}
+
+export function normalizeModelMappingsWithDefaults(
+  mappings?: Record<string, ModelMapping>
+): Record<string, ModelMapping> {
+  const legacyModelNames = new Set(DEEPSEEK_LEGACY_MODEL_MAPPING_NAMES)
+  const customMappings = Object.fromEntries(
+    Object.entries(mappings || {}).filter(([requestModel]) =>
+      !isDefaultModelMapping(requestModel) && !legacyModelNames.has(requestModel)
+    ),
+  )
+
+  return {
+    ...createDefaultModelMappings(),
+    ...customMappings,
+  }
+}
+
 export function sanitizeDeepSeekModelOverrides(
   overrides?: ProviderModelOverrides
 ): ProviderModelOverrides {
   const migratedModelNames = new Set([
     ...DEEPSEEK_PRIMARY_MODELS,
+    ...DEEPSEEK_LEGACY_MODEL_MAPPING_NAMES,
     ...Object.keys(DEFAULT_DEEPSEEK_MODEL_MAPPINGS),
   ])
 
