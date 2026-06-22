@@ -2,6 +2,14 @@
 
 This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
+## Fork Workflow
+
+- Treat `lat.md/` as the shared project memory for architecture, research, and delegated Jules tasks.
+- Before changing provider, OAuth, proxy, or i18n code, read the relevant `lat.md/` files.
+- Update `lat.md/` whenever a change affects architecture, provider behavior, authentication behavior, or test strategy.
+- Never commit secrets, cookies, OAuth tokens, Google account data, phone numbers, captured private traffic, or generated credentials.
+- Do not attempt CAPTCHA bypass, phone-verification bypass, or provider access-control evasion.
+
 ## Project Overview
 
 Chat2API Manager is an Electron desktop application that provides an OpenAI-compatible API proxy for multiple AI service providers (DeepSeek, GLM, Kimi, MiniMax, Qwen, Z.ai, Perplexity). It enables using any OpenAI-compatible client with these providers across macOS, Windows, and Linux.
