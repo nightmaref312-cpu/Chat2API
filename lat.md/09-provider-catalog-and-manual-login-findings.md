@@ -28,12 +28,12 @@ This file tracks the built-in Chat2API providers and manual login findings from 
 | `perplexity` | `https://www.perplexity.ai` | Available | Gmail login is available. | Manual live UI check by project owner. |
 | `qwen` | `https://www.qianwen.com` | Not available | Gmail login is not available. | Manual live UI check by project owner. |
 | `qwen-ai` | `https://chat.qwen.ai` | Available | Gmail login is available. Need to verify whether `Qwen3.7-Max` is accessible for Gmail-authenticated accounts. | Manual live UI check by project owner. |
-| `zai` | `https://chat.z.ai` | Available | Gmail login is available. Need to learn how to extract/use the newer `GLM-5.2` model. | Manual live UI check by project owner. |
+| `zai` | `https://chat.z.ai` | Available | Gmail login is available. JWT is supported; captcha-risk conversations can refresh short-lived `captcha_verify_param` through browser-assisted capture. Need to learn/extract `GLM-5.2`. | Manual live UI check by project owner plus `479bc2d` implementation. |
 
 ## Follow-Up Provider Work
 
 1. `qwen-ai`: verify live model availability for `Qwen3.7-Max` after Gmail login and compare it with the current configured model mapping in `src/main/providers/builtin/qwen-ai.ts`.
-2. `zai`: inspect live model metadata and request payloads for `GLM-5.2`; update `src/main/providers/builtin/zai.ts`, the Z.ai proxy adapter, docs, and tests once the extraction path is known.
+2. `zai`: inspect live model metadata and request payloads for `GLM-5.2`; update `src/main/providers/builtin/zai.ts`, the Z.ai proxy adapter, docs, and tests once the extraction path is known. Captcha-risk mitigation now uses browser-assisted `captcha_verify_param` capture.
 3. `mimo`: re-check the URL or provider status because `https://aistudio.xiaomimimo.com` returned 404 during manual login verification.
 4. UI should prioritize Gmail-capable providers: `deepseek`, `kimi`, `perplexity`, `qwen-ai`, and `zai`.
 5. UI should clearly mark `glm`, `minimax`, and `qwen` as not Gmail-capable based on current manual checks.

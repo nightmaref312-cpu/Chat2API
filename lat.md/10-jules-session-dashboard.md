@@ -18,6 +18,7 @@ This file tracks active and important Jules sessions so the orchestrator can mon
 | Session ID | Task | Outcome |
 | --- | --- | --- |
 | `15060948750619103072` | Add provider login capability labels | Completed; draft PR `#3` reviewed, refactored, and merged into `main` as `b1efb45`. |
+| local | Improve Z.ai captcha-assisted login | Completed directly by orchestrator; browser-assisted request-body capture for `captcha_verify_param` merged as `479bc2d`. |
 | `6183751859949730638` | Add Russian localization | Completed; draft PR `#2` merged into `main` as `27f2f90`. |
 | `2815913142746213638` | Research Gemini Code Assist integration | Completed; created draft PR `#1`. |
 | `2984572509670563777` | Research Antigravity provider integration | Completed; activity feed unavailable through API. |
