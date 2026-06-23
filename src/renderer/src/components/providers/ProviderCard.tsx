@@ -24,7 +24,8 @@ import {
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { Provider, ProviderStatus , BuiltinProviderConfig} from '@/types/electron'
+import type { Provider, ProviderStatus, BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import deepseekIcon from '@/assets/providers/deepseek.svg'
 import glmIcon from '@/assets/providers/glm.svg'
 import kimiIcon from '@/assets/providers/kimi.svg'
@@ -136,19 +137,11 @@ export function ProviderCard({
               {getProviderDescription() || `${provider.supportedModels?.length || 0} ${t('providers.models').toLowerCase()}`}
             </CardDescription>
 
-            {isBuiltin && (provider as BuiltinProviderConfig).loginCapabilities?.gmail && (
-              <p className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                <span className="font-medium">{t('providers.loginCapability')}:</span>
-                <span className={cn(
-                  (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'supported' ? "text-green-600 dark:text-green-400" :
-                  (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'unsupported' ? "text-red-600 dark:text-red-400" :
-                  "text-amber-600 dark:text-amber-400"
-                )}>
-                  {(provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'supported' ? t('providers.loginSupported') :
-                   (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'unsupported' ? t('providers.loginUnsupported') :
-                   t('providers.loginUnknown')}
-                </span>
-              </p>
+            {isBuiltin && (
+              <LoginCapabilityBadge
+                status={(provider as BuiltinProviderConfig).loginCapabilities?.gmail}
+                className="mt-1"
+              />
             )}
             {provider.id === 'perplexity' && (
               <p className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 mt-1">

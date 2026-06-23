@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Check, Plus, ArrowRight, Loader2, ExternalLink, AlertCircle, CheckCircle2, ArrowLeft, Info, Eye, EyeOff, Copy } from 'lucide-react'
 import type { BuiltinProviderConfig, ProviderVendor } from '@/types/electron'
 import { cn } from '@/lib/utils'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import deepseekIcon from '@/assets/providers/deepseek.svg'
 import glmIcon from '@/assets/providers/glm.svg'
 import kimiIcon from '@/assets/providers/kimi.svg'
@@ -676,20 +677,7 @@ export function AddProviderDialog({
                         {getProviderDescription(provider)}
                       </p>
 
-                      {provider.loginCapabilities?.gmail && (
-                        <p className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                          <span className="font-medium">{t('providers.loginCapability')}:</span>
-                          <span className={cn(
-                            provider.loginCapabilities.gmail === 'supported' ? "text-green-600 dark:text-green-400" :
-                            provider.loginCapabilities.gmail === 'unsupported' ? "text-red-600 dark:text-red-400" :
-                            "text-amber-600 dark:text-amber-400"
-                          )}>
-                            {provider.loginCapabilities.gmail === 'supported' ? t('providers.loginSupported') :
-                             provider.loginCapabilities.gmail === 'unsupported' ? t('providers.loginUnsupported') :
-                             t('providers.loginUnknown')}
-                          </span>
-                        </p>
-                      )}
+                      <LoginCapabilityBadge status={provider.loginCapabilities?.gmail} className="mt-1" />
                       {provider.id === 'perplexity' && (
                         <p className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 mt-1">
                           <Info className="h-3 w-3 flex-shrink-0" />

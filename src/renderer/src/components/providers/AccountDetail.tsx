@@ -34,7 +34,8 @@ import {
   TrendingUp,
   Coins
 } from 'lucide-react'
-import type { Account, AccountStatus, Provider , BuiltinProviderConfig} from '@/types/electron'
+import type { Account, AccountStatus, Provider, BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import { cn } from '@/lib/utils'
 
 interface AccountDetailProps {
@@ -302,19 +303,10 @@ export function AccountDetail({
                     <User className="h-4 w-4" />
                     <span className="text-sm">{t('providers.loginCapability')}</span>
                   </div>
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "text-xs font-medium",
-                      (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'supported' ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" :
-                      (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'unsupported' ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" :
-                      "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                    )}
-                  >
-                    {(provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'supported' ? t('providers.loginSupported') :
-                     (provider as BuiltinProviderConfig).loginCapabilities?.gmail === 'unsupported' ? t('providers.loginUnsupported') :
-                     t('providers.loginUnknown')}
-                  </Badge>
+                  <LoginCapabilityBadge
+                    status={(provider as BuiltinProviderConfig).loginCapabilities?.gmail}
+                    variant="badge"
+                  />
                 </div>
               </>
             )}

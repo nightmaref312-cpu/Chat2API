@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -14,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ExternalLink, Loader2, Check, Copy, AlertCircle } from 'lucide-react'
 import type { BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import deepseekIcon from '@/assets/providers/deepseek.svg'
 import glmIcon from '@/assets/providers/glm.svg'
 import kimiIcon from '@/assets/providers/kimi.svg'
@@ -270,21 +270,11 @@ export function LoginGuideDialog({
               </DialogDescription>
             </div>
           </div>
-          {provider.loginCapabilities?.gmail && (
-            <div className="flex items-center gap-2 mt-2 ml-15 text-sm">
-              <span className="font-medium text-muted-foreground">{t('providers.loginCapability')}:</span>
-              <span className={cn(
-                "px-2 py-0.5 rounded text-xs font-medium",
-                provider.loginCapabilities.gmail === 'supported' ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" :
-                provider.loginCapabilities.gmail === 'unsupported' ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" :
-                "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-              )}>
-                {provider.loginCapabilities.gmail === 'supported' ? t('providers.loginSupported') :
-                 provider.loginCapabilities.gmail === 'unsupported' ? t('providers.loginUnsupported') :
-                 t('providers.loginUnknown')}
-              </span>
-            </div>
-          )}
+          <LoginCapabilityBadge
+            status={provider.loginCapabilities?.gmail}
+            variant="badge"
+            className="mt-2 ml-12"
+          />
         </DialogHeader>
 
         <div className="space-y-4 mt-4">
