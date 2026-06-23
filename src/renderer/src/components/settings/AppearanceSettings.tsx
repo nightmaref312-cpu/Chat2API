@@ -77,6 +77,7 @@ export function AppearanceSettings() {
               <SelectContent>
                 <SelectItem value="zh-CN">{t('settings.languageZh')}</SelectItem>
                 <SelectItem value="en-US">{t('settings.languageEn')}</SelectItem>
+                <SelectItem value="ru-RU">{t('settings.languageRu')}</SelectItem>
               </SelectContent>
             </Select>
           </div>

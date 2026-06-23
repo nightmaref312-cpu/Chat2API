@@ -650,6 +650,7 @@
     "selectLanguage": "Select application interface language",
     "languageZh": "简体中文",
     "languageEn": "English",
+    "languageRu": "Русский",
     "sidebar": "Sidebar",
     "sidebarSettings": "Sidebar Settings",
     "sidebarSettingsDesc": "Configure the default behavior of the sidebar",
