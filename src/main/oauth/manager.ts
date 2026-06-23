@@ -413,7 +413,40 @@ export class OAuthManager extends EventEmitter {
           }
         }
 
-        // For non-MiniMax/Mimo providers, validate immediately when we have a token
+        // For Z.ai, keep the browser window open briefly after JWT capture so a real
+        // chat.z.ai request can provide the short-lived captcha_verify_param.
+        if (providerType === 'zai') {
+          if (!collectedTokens.token) {
+            console.log('[OAuthManager] Waiting for Z.ai JWT token...')
+            return
+          }
+
+          if (collectedTokens.captcha_verify_param) {
+            console.log('[OAuthManager] Z.ai token and captcha parameter collected, validating...')
+            if (validationTimeout) {
+              clearTimeout(validationTimeout)
+            }
+            validateAndComplete()
+            return
+          }
+
+          if (validationTimeout) {
+            clearTimeout(validationTimeout)
+          }
+
+          this.sendProgressToRenderer({
+            status: 'pending',
+            message: 'Z.ai token captured. Send one test message in the login window if captcha verification is required...',
+          })
+
+          validationTimeout = setTimeout(() => {
+            console.log('[OAuthManager] Proceeding with Z.ai validation without captcha parameter')
+            validateAndComplete()
+          }, 30000)
+          return
+        }
+
+        // For non-MiniMax/Mimo/Z.ai providers, validate immediately when we have a token
         if (providerType !== 'minimax' && providerType !== 'mimo') {
           if (isValidating) {
             console.log('[OAuthManager] Already validating, skipping')

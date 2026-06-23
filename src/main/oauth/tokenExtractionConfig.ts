@@ -5,13 +5,14 @@
 
 import { ProviderType } from './types'
 
-export type TokenSourceType = 'networkHeader' | 'localStorage' | 'cookie'
+export type TokenSourceType = 'networkHeader' | 'localStorage' | 'cookie' | 'requestBody'
 
 export interface TokenSource {
   type: TokenSourceType
   key: string
   urlPattern?: string
   extractPattern?: string
+  requiredTokens?: string[]
 }
 
 export interface TokenExtractionConfig {
@@ -104,6 +105,12 @@ export const TOKEN_EXTRACTION_CONFIGS: Record<ProviderType, TokenExtractionConfi
       {
         type: 'cookie',
         key: 'token',
+      },
+      {
+        type: 'requestBody',
+        key: 'captcha_verify_param',
+        urlPattern: '*://chat.z.ai/api/v2/chat/completions*',
+        requiredTokens: ['token'],
       },
     ],
     targetDomains: ['.z.ai', 'z.ai', 'chat.z.ai'],

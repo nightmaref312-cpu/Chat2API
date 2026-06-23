@@ -323,7 +323,10 @@
     "description": "Z.ai - 免费AI聊天机器人，由 GLM-5.1、GLM-5 和 GLM-4.7 驱动",
     "token": "访问令牌",
     "tokenPlaceholder": "请输入 Z.ai JWT Token",
-    "tokenHelp": "从Z.ai 网页版获取token，可在浏览器开发者工具 Application -> Cookie 中找到，以\"eyJ...\"为开头"
+    "tokenHelp": "从Z.ai 网页版获取token，可在浏览器开发者工具 Application -> Cookie 中找到，以\"eyJ...\"为开头",
+    "captchaVerifyParam": "验证码校验参数",
+    "captchaVerifyParamPlaceholder": "可选的 chat.z.ai captcha_verify_param",
+    "captchaVerifyParamHelp": "可选的短时校验值。需要验证码时，请使用浏览器登录，并在 Z.ai 窗口中发送一条测试消息。"
   },
   "mimo": {
     "name": "Mimo",

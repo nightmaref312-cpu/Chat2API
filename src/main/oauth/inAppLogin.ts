@@ -17,6 +17,7 @@ export interface InAppLoginResult {
 export interface TokenFoundEvent {
   key: string
   value: string
+  allCookies?: Record<string, string>
 }
 
 export interface InAppLoginOptions {
@@ -168,6 +169,7 @@ export class InAppLoginManager extends EventEmitter {
                   console.log('[InAppLogin] Found target cookie in Set-Cookie header:', name)
                   if (this.isValidToken(value)) {
                     console.log('[InAppLogin] Cookie token is valid from Set-Cookie header')
+                    this.foundTokens.set(source.key, value)
                     this.emit('tokenFound', { key: source.key, value: value })
                   }
                 }
@@ -194,7 +196,7 @@ export class InAppLoginManager extends EventEmitter {
       const authHeader = details.requestHeaders['Authorization'] || details.requestHeaders['authorization']
       if (authHeader) {
         for (const source of this.config!.tokenSources) {
-          if (source.type === 'networkHeader') {
+          if (source.type === 'networkHeader' && this.urlMatchesPattern(details.url, source.urlPattern)) {
             let token = authHeader
             if (source.extractPattern) {
               const match = authHeader.match(new RegExp(source.extractPattern))
@@ -205,6 +207,7 @@ export class InAppLoginManager extends EventEmitter {
               token = authHeader.substring(7)
             }
             if (this.isValidToken(token)) {
+              this.foundTokens.set(source.key, token)
               this.emit('tokenFound', { key: source.key, value: token })
             }
           }
@@ -212,6 +215,42 @@ export class InAppLoginManager extends EventEmitter {
       }
 
       callback({ requestHeaders: details.requestHeaders })
+    })
+
+    this.loginSession.webRequest.onBeforeRequest((details, callback) => {
+      if (this.isCompleted || !this.config) {
+        callback({})
+        return
+      }
+
+      if (!this.hasMinTimePassed()) {
+        callback({})
+        return
+      }
+
+      const requestBodySources = this.config.tokenSources.filter((source) => source.type === 'requestBody')
+      if (requestBodySources.length === 0 || !details.uploadData) {
+        callback({})
+        return
+      }
+
+      const body = details.uploadData
+        .map((item) => item.bytes ? Buffer.from(item.bytes).toString('utf8') : '')
+        .join('')
+
+      for (const source of requestBodySources) {
+        if (!this.urlMatchesPattern(details.url, source.urlPattern)) continue
+        if (!this.hasRequiredTokens(source)) continue
+
+        const value = this.extractRequestBodyValue(body, source.key)
+        if (value && this.isValidToken(value)) {
+          console.log('[InAppLogin] Found target request body value:', source.key)
+          this.foundTokens.set(source.key, value)
+          this.emit('tokenFound', { key: source.key, value })
+        }
+      }
+
+      callback({})
     })
 
     this.loginSession.cookies.on('changed', async (_event, cookie, _cause, removed) => {
@@ -229,6 +268,7 @@ export class InAppLoginManager extends EventEmitter {
           console.log('[InAppLogin] Cookie matches source key:', source.key)
           if (this.isValidToken(cookie.value)) {
             console.log('[InAppLogin] Cookie token is valid, emitting tokenFound')
+            this.foundTokens.set(source.key, cookie.value)
             this.emit('tokenFound', { key: source.key, value: cookie.value })
           } else {
             console.log('[InAppLogin] Cookie token is invalid:', cookie.value ? cookie.value.substring(0, 50) : 'null')
@@ -249,6 +289,36 @@ export class InAppLoginManager extends EventEmitter {
       console.log('[InAppLogin] Page navigated, starting delayed token check')
       this.delayedTokenCheck()
     })
+  }
+
+
+  private urlMatchesPattern(url: string, pattern?: string): boolean {
+    if (!pattern) return true
+    const escaped = pattern
+      .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+      .replace(/\*/g, '.*')
+    return new RegExp(`^${escaped}$`).test(url)
+  }
+
+  private extractRequestBodyValue(body: string, key: string): string | null {
+    if (!body) return null
+
+    try {
+      const parsed = JSON.parse(body)
+      const value = parsed?.[key]
+      if (typeof value === 'string' && value) return value
+    } catch {
+      // Fall back to form/urlencoded parsing below.
+    }
+
+    const params = new URLSearchParams(body)
+    const value = params.get(key)
+    return value || null
+  }
+
+  private hasRequiredTokens(source: TokenSource): boolean {
+    if (!source.requiredTokens || source.requiredTokens.length === 0) return true
+    return source.requiredTokens.every((key) => this.foundTokens.has(key))
   }
 
   private hasMinTimePassed(): boolean {
@@ -395,6 +465,7 @@ export class InAppLoginManager extends EventEmitter {
             const realUserID = parsed.realUserID || parsed.id
             if (realUserID) {
               console.log('[InAppLogin] Found realUserID from user_detail_agent:', realUserID)
+              this.foundTokens.set('realUserID', String(realUserID))
               this.emit('tokenFound', { key: 'realUserID', value: String(realUserID) })
             }
           } catch (e) {
@@ -419,6 +490,7 @@ export class InAppLoginManager extends EventEmitter {
         if (tokenValue && typeof tokenValue === 'string' && this.isValidToken(tokenValue)) {
           console.log('[InAppLogin] Token found and valid from localStorage:', source.key)
           const emitKey = source.key === '_token' ? 'token' : source.key
+          this.foundTokens.set(emitKey, tokenValue)
           this.emit('tokenFound', { key: emitKey, value: tokenValue })
         }
       }
@@ -461,6 +533,7 @@ export class InAppLoginManager extends EventEmitter {
                 allCookiesObj[c.name] = c.value
               }
             }
+            this.foundTokens.set(source.key, cookie.value)
             this.emit('tokenFound', { key: source.key, value: cookie.value, allCookies: allCookiesObj })
           } else {
             console.log('[InAppLogin] Cookie token is invalid:', source.key, cookie.value ? cookie.value.substring(0, 50) : 'null')
@@ -508,6 +581,8 @@ export class InAppLoginManager extends EventEmitter {
     if (this.loginSession) {
       try {
         this.loginSession.webRequest.onBeforeSendHeaders(() => {})
+        this.loginSession.webRequest.onBeforeRequest(() => {})
+        this.loginSession.webRequest.onHeadersReceived(() => {})
         this.loginSession.cookies.removeAllListeners()
       } catch (error) {
         console.error('[InAppLogin] Error cleaning up session:', error)

@@ -322,7 +322,10 @@
     "description": "Z.ai - Бесплатный ИИ-чат-бот на базе GLM-5.1, GLM-5 и GLM-4.7",
     "token": "Токен доступа",
     "tokenPlaceholder": "Введите JWT токен Z.ai",
-    "tokenHelp": "Получите токен из веб-версии Z.ai. Находится в браузере в DevTools -> Application -> Cookie, начинается с \"eyJ...\""
+    "tokenHelp": "Получите токен из веб-версии Z.ai. Находится в браузере в DevTools -> Application -> Cookie, начинается с \"eyJ...\"",
+    "captchaVerifyParam": "Параметр проверки Captcha",
+    "captchaVerifyParamPlaceholder": "Необязательный captcha_verify_param из chat.z.ai",
+    "captchaVerifyParamHelp": "Необязательное короткоживущее значение проверки. Используйте вход через браузер и отправьте одно тестовое сообщение в окне Z.ai, если требуется captcha."
   },
   "mimo": {
     "name": "Mimo",

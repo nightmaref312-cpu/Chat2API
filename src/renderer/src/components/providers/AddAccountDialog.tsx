@@ -45,7 +45,6 @@ function mapOAuthCredentials(providerId: string | undefined, credentials: Record
     'deepseek': 'userToken',
     'qwen': 'tongyi_sso_ticket',
     'qwen-ai': 'tongyi_sso_ticket',
-    'zai': 'tongyi_sso_ticket',
     'perplexity': '__Secure-next-auth.session-token',
     'mimo': 'serviceToken',
   }
@@ -55,7 +54,6 @@ function mapOAuthCredentials(providerId: string | undefined, credentials: Record
     'deepseek': 'token',
     'qwen': 'ticket',
     'qwen-ai': 'ticket',
-    'zai': 'ticket',
     'perplexity': 'sessionToken',
     'mimo': 'service_token',
   }
@@ -604,6 +602,11 @@ function CredentialFieldsForm({ fields, credentials, onChange, t, providerId }: 
           label: t('zai.token'),
           placeholder: t('zai.tokenPlaceholder'),
           helpText: t('zai.tokenHelp'),
+        },
+        captcha_verify_param: {
+          label: t('zai.captchaVerifyParam'),
+          placeholder: t('zai.captchaVerifyParamPlaceholder'),
+          helpText: t('zai.captchaVerifyParamHelp'),
         },
       },
       mimo: {

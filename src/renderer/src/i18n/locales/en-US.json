@@ -323,7 +323,10 @@
     "description": "Z.ai - Free AI Chatbot powered by GLM-5.1, GLM-5, and GLM-4.7",
     "token": "Access Token",
     "tokenPlaceholder": "Enter Z.ai JWT Token",
-    "tokenHelp": "Get token from Z.ai web version, found in browser DevTools Application -> Cookie, starts with \"eyJ...\""
+    "tokenHelp": "Get token from Z.ai web version, found in browser DevTools Application -> Cookie, starts with \"eyJ...\"",
+    "captchaVerifyParam": "Captcha Verify Param",
+    "captchaVerifyParamPlaceholder": "Optional captcha_verify_param captured from chat.z.ai",
+    "captchaVerifyParamHelp": "Optional short-lived verification value. Use browser login and send one test message in the Z.ai window when captcha is required."
   },
   "mimo": {
     "name": "Mimo",
