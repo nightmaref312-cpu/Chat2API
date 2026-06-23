@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 import zhCN from './locales/zh-CN.json'
 import enUS from './locales/en-US.json'
+import ruRU from './locales/ru-RU.json'
 
 const resources = {
   'zh-CN': {
@@ -11,6 +12,9 @@ const resources = {
   },
   'en-US': {
     translation: enUS,
+  },
+  'ru-RU': {
+    translation: ruRU,
   },
 }
 
@@ -30,6 +34,7 @@ i18n
       lookupLocalStorage: 'i18nextLng',
       convertDetectedLanguage: (lng: string) => {
         if (lng.includes('zh')) return 'zh-CN'
+        if (lng.includes('ru')) return 'ru-RU'
         if (lng.includes('en')) return 'en-US'
         return 'en-US'
       },

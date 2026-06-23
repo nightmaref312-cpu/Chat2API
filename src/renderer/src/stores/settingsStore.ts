@@ -4,7 +4,7 @@ import type { AppConfig } from '@/types/electron'
 import i18n from '@/i18n'
 
 export type Theme = 'light' | 'dark' | 'system'
-export type Language = 'zh-CN' | 'en-US'
+export type Language = 'zh-CN' | 'en-US' | 'ru-RU'
 export type CloseBehavior = 'minimize' | 'close' | 'ask'
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 export type OAuthProxyMode = 'system' | 'none'
