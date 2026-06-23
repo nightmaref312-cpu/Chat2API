@@ -6,20 +6,20 @@ This file tracks active and important Jules sessions so the orchestrator can mon
 
 | Session ID | Task | Scope | State | PR | Last Checked | Next Action |
 | --- | --- | --- | --- | --- | --- | --- |
-| `15060948750619103072` | Add provider login capability labels | Config-driven Gmail capability metadata and UI labels, no OAuth/proxy changes | `IN_PROGRESS` | None yet | 2026-06-23 11:20 UTC | Wait, then review PR diff when created. |
 
 ## Open PRs
 
 | PR | Title | State | Branch | Notes | Next Action |
 | --- | --- | --- | --- | --- | --- |
 | `#1` | Add implementation plan for Google Gemini provider | Open draft | `google-gemini-plan-2815913142746213638` | Based on older `main`; plan needs update against current docs and architecture before merge. | Review and update after current implementation PRs settle. |
-| `#2` | feat: Russian UI Localization | Open draft | `feat/ru-i18n-6183751859949730638` | Updated with latest `main`; PR diff contains only i18n/type changes and no dashboard deletion. `check:source-artifacts` and locale key parity passed locally. | Ready for final review/merge after optional build with installed deps. |
+| `#3` | feat: Implement provider Gmail/Google login capability labels | Open draft | `jules-provider-login-capability-15060948750619103072` | Reviewed and refactored shared `LoginCapabilityBadge`; rebased/merged over `main` after `ru-RU`; source-artifacts and locale key parity passed locally. | Ready for final merge review; no proxy/OAuth/token changes observed. |
 
 ## Completed / Canceled Sessions
 
 | Session ID | Task | Outcome |
 | --- | --- | --- |
-| `6183751859949730638` | Add Russian localization | Completed; created draft PR `#2`, updated to include latest `main`. |
+| `15060948750619103072` | Add provider login capability labels | Completed; created draft PR `#3`; orchestrator refactored duplicated UI badge and added `ru-RU` keys after PR `#2` merge. |
+| `6183751859949730638` | Add Russian localization | Completed; draft PR `#2` merged into `main` as `27f2f90`. |
 | `2815913142746213638` | Research Gemini Code Assist integration | Completed; created draft PR `#1`. |
 | `2984572509670563777` | Research Antigravity provider integration | Completed; activity feed unavailable through API. |
 | `13015313924206141005` | Plan Russian localization | Completed; activity feed unavailable through API. |
