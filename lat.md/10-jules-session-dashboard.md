@@ -12,13 +12,12 @@ This file tracks active and important Jules sessions so the orchestrator can mon
 | PR | Title | State | Branch | Notes | Next Action |
 | --- | --- | --- | --- | --- | --- |
 | `#1` | Add implementation plan for Google Gemini provider | Open draft | `google-gemini-plan-2815913142746213638` | Based on older `main`; plan needs update against current docs and architecture before merge. | Review and update after current implementation PRs settle. |
-| `#3` | feat: Implement provider Gmail/Google login capability labels | Open draft | `jules-provider-login-capability-15060948750619103072` | Reviewed and refactored shared `LoginCapabilityBadge`; rebased/merged over `main` after `ru-RU`; source-artifacts and locale key parity passed locally. | Ready for final merge review; no proxy/OAuth/token changes observed. |
 
 ## Completed / Canceled Sessions
 
 | Session ID | Task | Outcome |
 | --- | --- | --- |
-| `15060948750619103072` | Add provider login capability labels | Completed; created draft PR `#3`; orchestrator refactored duplicated UI badge and added `ru-RU` keys after PR `#2` merge. |
+| `15060948750619103072` | Add provider login capability labels | Completed; draft PR `#3` reviewed, refactored, and merged into `main` as `b1efb45`. |
 | `6183751859949730638` | Add Russian localization | Completed; draft PR `#2` merged into `main` as `27f2f90`. |
 | `2815913142746213638` | Research Gemini Code Assist integration | Completed; created draft PR `#1`. |
 | `2984572509670563777` | Research Antigravity provider integration | Completed; activity feed unavailable through API. |
