@@ -60,6 +60,9 @@ export const zaiConfig: BuiltinProviderConfig = {
   ],
   tokenCheckEndpoint: '/api/v1/users/user/settings',
   tokenCheckMethod: 'GET',
+  loginCapabilities: {
+    gmail: 'supported',
+  },
 }
 
 export default zaiConfig

@@ -7,6 +7,7 @@
 | API Base | https://aistudio.xiaomimimo.com |
 | 认证 | Cookie |
 | 凭据字段 | `service_token`, `user_id`, `ph_token` |
+| Google / Gmail 登录 | 未知 |
 
 ## 默认模型
 

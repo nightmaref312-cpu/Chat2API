@@ -7,6 +7,7 @@
 | API Base | https://chat2.qianwen.com |
 | 认证 | Tongyi SSO Ticket |
 | 凭据字段 | `ticket` |
+| Google / Gmail 登录 | 不支持 |
 
 ## 默认模型
 

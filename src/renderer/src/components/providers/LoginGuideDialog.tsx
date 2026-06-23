@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ExternalLink, Loader2, Check, Copy, AlertCircle } from 'lucide-react'
 import type { BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import deepseekIcon from '@/assets/providers/deepseek.svg'
 import glmIcon from '@/assets/providers/glm.svg'
 import kimiIcon from '@/assets/providers/kimi.svg'
@@ -269,6 +270,11 @@ export function LoginGuideDialog({
               </DialogDescription>
             </div>
           </div>
+          <LoginCapabilityBadge
+            status={provider.loginCapabilities?.gmail}
+            variant="badge"
+            className="mt-2 ml-12"
+          />
         </DialogHeader>
 
         <div className="space-y-4 mt-4">

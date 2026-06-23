@@ -7,6 +7,7 @@
 | API Base | https://chat.z.ai/api |
 | 认证 | JWT Token |
 | 凭据字段 | `token`，可选 `captcha_verify_param` |
+| Google / Gmail 登录 | 支持 |
 | 当前状态 | 受前端验证码风控限制，暂不可用 |
 
 ## 默认模型

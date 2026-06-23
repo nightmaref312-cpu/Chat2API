@@ -50,6 +50,9 @@ export const glmConfig: BuiltinProviderConfig = {
   ],
   tokenCheckEndpoint: '/chatglm/user-api/user/refresh',
   tokenCheckMethod: 'POST',
+  loginCapabilities: {
+    gmail: 'unsupported',
+  },
 }
 
 export default glmConfig

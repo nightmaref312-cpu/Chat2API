@@ -58,6 +58,11 @@
     "daysAgo": "{{count}}d ago"
   },
   "providers": {
+
+    "loginCapability": "Google/Gmail Login",
+    "loginSupported": "Supported",
+    "loginUnsupported": "Unsupported",
+    "loginUnknown": "Unknown",
     "title": "Provider Management",
     "subtitle": "Manage your API provider configurations and accounts",
     "addProvider": "Add Provider",

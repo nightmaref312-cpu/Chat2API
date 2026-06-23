@@ -58,6 +58,10 @@
     "daysAgo": "{{count}} д назад"
   },
   "providers": {
+    "loginCapability": "Вход через Google/Gmail",
+    "loginSupported": "Поддерживается",
+    "loginUnsupported": "Не поддерживается",
+    "loginUnknown": "Неизвестно",
     "title": "Управление провайдерами",
     "subtitle": "Управляйте конфигурациями провайдеров API и аккаунтами",
     "addProvider": "Добавить провайдера",

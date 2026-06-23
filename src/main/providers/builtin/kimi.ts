@@ -44,6 +44,9 @@ export const kimiConfig: BuiltinProviderConfig = {
   ],
   tokenCheckEndpoint: '/api/auth/token/refresh',
   tokenCheckMethod: 'GET',
+  loginCapabilities: {
+    gmail: 'supported',
+  },
 }
 
 export default kimiConfig

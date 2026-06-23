@@ -34,7 +34,8 @@ import {
   TrendingUp,
   Coins
 } from 'lucide-react'
-import type { Account, AccountStatus, Provider } from '@/types/electron'
+import type { Account, AccountStatus, Provider, BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import { cn } from '@/lib/utils'
 
 interface AccountDetailProps {
@@ -293,6 +294,22 @@ export function AccountDetail({
                 <span className="text-sm">{formatDate(account.updatedAt)}</span>
               </div>
             </div>
+
+            {(provider as BuiltinProviderConfig)?.loginCapabilities?.gmail && (
+              <>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <User className="h-4 w-4" />
+                    <span className="text-sm">{t('providers.loginCapability')}</span>
+                  </div>
+                  <LoginCapabilityBadge
+                    status={(provider as BuiltinProviderConfig).loginCapabilities?.gmail}
+                    variant="badge"
+                  />
+                </div>
+              </>
+            )}
 
             {account.status === 'error' && account.errorMessage && (
               <div className="mt-4 p-3 bg-red-50 rounded-lg">

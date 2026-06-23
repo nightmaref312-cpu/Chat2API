@@ -60,10 +60,19 @@ export interface CustomProviderFormData {
   credentialFields: CredentialField[]
 }
 
+
+export type LoginSupportStatus = 'supported' | 'unsupported' | 'unknown'
+
+export interface LoginCapability {
+  gmail: LoginSupportStatus
+  notes?: string
+}
+
 export interface BuiltinProviderConfig extends Provider {
   credentialFields: CredentialField[]
   tokenCheckEndpoint?: string
   tokenCheckMethod?: 'GET' | 'POST'
+  loginCapabilities?: LoginCapability
 }
 
 interface ProxyAPI {

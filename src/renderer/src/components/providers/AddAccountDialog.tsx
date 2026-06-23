@@ -30,6 +30,7 @@ import {
   Check
 } from 'lucide-react'
 import type { Provider, CredentialField, Account, BuiltinProviderConfig, ProviderVendor } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 
 /**
  * Map OAuth credentials to provider credential field names
@@ -351,6 +352,11 @@ export function AddAccountDialog({
             <DialogDescription>
               {t('providers.manageAllAccounts')} - {provider.name}
             </DialogDescription>
+            <LoginCapabilityBadge
+              status={(provider as BuiltinProviderConfig).loginCapabilities?.gmail}
+              variant="badge"
+              className="mt-2"
+            />
           </DialogHeader>
 
           <div className="space-y-4 mt-4">

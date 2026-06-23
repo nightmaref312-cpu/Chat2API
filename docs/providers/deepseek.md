@@ -7,6 +7,7 @@
 | API Base | https://chat.deepseek.com/api |
 | 认证 | User Token |
 | 凭据字段 | `token` |
+| Google / Gmail 登录 | 支持 |
 
 ## 默认模型
 

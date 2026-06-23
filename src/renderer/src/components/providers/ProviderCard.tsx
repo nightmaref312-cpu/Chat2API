@@ -24,7 +24,8 @@ import {
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { Provider, ProviderStatus } from '@/types/electron'
+import type { Provider, ProviderStatus, BuiltinProviderConfig } from '@/types/electron'
+import { LoginCapabilityBadge } from './LoginCapabilityBadge'
 import deepseekIcon from '@/assets/providers/deepseek.svg'
 import glmIcon from '@/assets/providers/glm.svg'
 import kimiIcon from '@/assets/providers/kimi.svg'
@@ -135,6 +136,13 @@ export function ProviderCard({
             <CardDescription className="text-xs mt-1">
               {getProviderDescription() || `${provider.supportedModels?.length || 0} ${t('providers.models').toLowerCase()}`}
             </CardDescription>
+
+            {isBuiltin && (
+              <LoginCapabilityBadge
+                status={(provider as BuiltinProviderConfig).loginCapabilities?.gmail}
+                className="mt-1"
+              />
+            )}
             {provider.id === 'perplexity' && (
               <p className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 mt-1">
                 <Info className="h-3 w-3 flex-shrink-0" />

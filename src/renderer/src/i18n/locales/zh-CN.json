@@ -58,6 +58,11 @@
     "daysAgo": "{{count}}天前"
   },
   "providers": {
+
+    "loginCapability": "Google/Gmail 登录",
+    "loginSupported": "支持",
+    "loginUnsupported": "不支持",
+    "loginUnknown": "未知",
     "title": "供应商管理",
     "subtitle": "管理您的 API 供应商配置和账户",
     "addProvider": "添加供应商",
