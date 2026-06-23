@@ -18,10 +18,25 @@ This file tracks the built-in Chat2API providers and manual login findings from 
 
 ## Manual Login Findings
 
-| Provider ID | Finding | Source |
-| --- | --- | --- |
-| `deepseek` | Gmail login is available. | Manual live UI check by project owner. |
-| `glm` | Gmail login is not available; login is available only through Chinese phone number or WeChat. | Manual live UI check by project owner. |
+| Provider ID | Login URL | Gmail/Google status | Finding | Source |
+| --- | --- | --- | --- | --- |
+| `deepseek` | `https://chat.deepseek.com` | Available | Gmail login is available. | Manual live UI check by project owner. |
+| `glm` | `https://chatglm.cn` | Not available | Gmail login is not available; login is available only through Chinese phone number or WeChat. | Manual live UI check by project owner. |
+| `kimi` | `https://www.kimi.com` | Available | Gmail login is available. | Manual live UI check by project owner. |
+| `minimax` | `https://agent.minimaxi.com` | Not available | Gmail login is not available. | Manual live UI check by project owner. |
+| `mimo` | `https://aistudio.xiaomimimo.com` | Unknown | Site returned 404 during manual check, so login method could not be verified. | Manual live UI check by project owner. |
+| `perplexity` | `https://www.perplexity.ai` | Available | Gmail login is available. | Manual live UI check by project owner. |
+| `qwen` | `https://www.qianwen.com` | Not available | Gmail login is not available. | Manual live UI check by project owner. |
+| `qwen-ai` | `https://chat.qwen.ai` | Available | Gmail login is available. Need to verify whether `Qwen3.7-Max` is accessible for Gmail-authenticated accounts. | Manual live UI check by project owner. |
+| `zai` | `https://chat.z.ai` | Available | Gmail login is available. Need to learn how to extract/use the newer `GLM-5.2` model. | Manual live UI check by project owner. |
+
+## Follow-Up Provider Work
+
+1. `qwen-ai`: verify live model availability for `Qwen3.7-Max` after Gmail login and compare it with the current configured model mapping in `src/main/providers/builtin/qwen-ai.ts`.
+2. `zai`: inspect live model metadata and request payloads for `GLM-5.2`; update `src/main/providers/builtin/zai.ts`, the Z.ai proxy adapter, docs, and tests once the extraction path is known.
+3. `mimo`: re-check the URL or provider status because `https://aistudio.xiaomimimo.com` returned 404 during manual login verification.
+4. UI should prioritize Gmail-capable providers: `deepseek`, `kimi`, `perplexity`, `qwen-ai`, and `zai`.
+5. UI should clearly mark `glm`, `minimax`, and `qwen` as not Gmail-capable based on current manual checks.
 
 ## GLM Notes
 
