@@ -7,6 +7,7 @@
 | API Base | https://chat.qwen.ai |
 | 认证 | JWT Token |
 | 凭据字段 | `token`, `cookies` |
+| Google / Gmail 登录 | 支持 |
 
 ## 默认模型
 

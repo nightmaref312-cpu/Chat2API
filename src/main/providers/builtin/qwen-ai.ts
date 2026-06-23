@@ -53,6 +53,9 @@ export const qwenAiConfig: BuiltinProviderConfig = {
       helpText: 'Full cookie string from browser DevTools (optional but recommended)',
     },
   ],
+  loginCapabilities: {
+    gmail: 'supported',
+  },
 }
 
 export default qwenAiConfig

@@ -7,6 +7,7 @@
 | API Base | https://www.kimi.com |
 | 认证 | JWT Token |
 | 凭据字段 | `token` |
+| Google / Gmail 登录 | 支持 |
 
 ## 默认模型
 

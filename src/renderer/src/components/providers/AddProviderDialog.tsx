@@ -675,6 +675,21 @@ export function AddProviderDialog({
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {getProviderDescription(provider)}
                       </p>
+
+                      {provider.loginCapabilities?.gmail && (
+                        <p className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                          <span className="font-medium">{t('providers.loginCapability')}:</span>
+                          <span className={cn(
+                            provider.loginCapabilities.gmail === 'supported' ? "text-green-600 dark:text-green-400" :
+                            provider.loginCapabilities.gmail === 'unsupported' ? "text-red-600 dark:text-red-400" :
+                            "text-amber-600 dark:text-amber-400"
+                          )}>
+                            {provider.loginCapabilities.gmail === 'supported' ? t('providers.loginSupported') :
+                             provider.loginCapabilities.gmail === 'unsupported' ? t('providers.loginUnsupported') :
+                             t('providers.loginUnknown')}
+                          </span>
+                        </p>
+                      )}
                       {provider.id === 'perplexity' && (
                         <p className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 mt-1">
                           <Info className="h-3 w-3 flex-shrink-0" />

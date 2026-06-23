@@ -13,6 +13,21 @@ import { DEFAULT_TOOL_CALLING_CONFIG } from '../../shared/toolCalling.ts'
 export type AccountStatus = 'active' | 'inactive' | 'expired' | 'error'
 
 /**
+ * Login Support Status Enum
+ */
+export type LoginSupportStatus = 'supported' | 'unsupported' | 'unknown'
+
+/**
+ * Login Capability Interface
+ */
+export interface LoginCapability {
+  /** Gmail/Google login support status */
+  gmail: LoginSupportStatus
+  /** Optional notes about login capabilities */
+  notes?: string
+}
+
+/**
  * Provider Type Enum
  */
 export type ProviderType = 'builtin' | 'custom'
@@ -72,6 +87,8 @@ export interface BuiltinProviderConfig extends Omit<Provider, 'createdAt' | 'upd
   modelsApiEndpoint?: string
   /** Additional headers for models API request */
   modelsApiHeaders?: Record<string, string>
+  /** Login capability metadata */
+  loginCapabilities?: LoginCapability
 }
 
 /**

@@ -51,6 +51,9 @@ export const minimaxConfig: BuiltinProviderConfig = {
   ],
   tokenCheckEndpoint: '/v1/api/user/device/register',
   tokenCheckMethod: 'POST',
+  loginCapabilities: {
+    gmail: 'unsupported',
+  },
 }
 
 export default minimaxConfig

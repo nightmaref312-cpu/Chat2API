@@ -7,6 +7,7 @@
 | API Base | https://www.perplexity.ai |
 | 认证 | Cookie |
 | 凭据字段 | `sessionToken` |
+| Google / Gmail 登录 | 支持 |
 
 ## 默认模型
 

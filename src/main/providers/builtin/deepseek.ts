@@ -45,6 +45,9 @@ export const deepseekConfig: BuiltinProviderConfig = {
   ],
   tokenCheckEndpoint: '/v0/users/current',
   tokenCheckMethod: 'GET',
+  loginCapabilities: {
+    gmail: 'supported',
+  },
 }
 
 export default deepseekConfig

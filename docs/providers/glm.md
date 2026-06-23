@@ -7,6 +7,7 @@
 | API Base | https://chatglm.cn/api |
 | 认证 | Refresh Token |
 | 凭据字段 | `refresh_token` |
+| Google / Gmail 登录 | 不支持 |
 
 ## 默认模型
 

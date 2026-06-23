@@ -41,6 +41,9 @@ export const qwenConfig: BuiltinProviderConfig = {
       helpText: 'SSO ticket obtained from www.qianwen.com, found in browser DevTools Application -> Cookies as tongyi_sso_ticket',
     },
   ],
+  loginCapabilities: {
+    gmail: 'unsupported',
+  },
 }
 
 export default qwenConfig

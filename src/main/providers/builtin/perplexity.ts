@@ -32,6 +32,9 @@ export const perplexityConfig: BuiltinProviderConfig = {
       helpText: 'Session token obtained from Perplexity web version (__Secure-next-auth.session-token cookie)',
     },
   ],
+  loginCapabilities: {
+    gmail: 'supported',
+  },
 }
 
 export default perplexityConfig

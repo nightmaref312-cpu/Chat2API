@@ -62,6 +62,9 @@ export const mimoConfig: BuiltinProviderConfig = {
       helpText: 'Found in browser DevTools -> Application -> Cookies -> xiaomichatbot_ph',
     },
   ],
+  loginCapabilities: {
+    gmail: 'unknown',
+  },
 }
 
 export default mimoConfig

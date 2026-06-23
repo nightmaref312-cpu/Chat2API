@@ -7,6 +7,7 @@
 | API Base | https://agent.minimaxi.com |
 | 认证 | JWT Token |
 | 凭据字段 | `token`, `realUserID` |
+| Google / Gmail 登录 | 不支持 |
 
 ## 默认模型
 
